@@ -1,0 +1,31 @@
+{{page-title "Index"}}
+
+<nav class="navbar">
+  {{#if this.isLoggedIn}}
+      <ul class="nav-links">
+      <li><LinkTo @route="calendar">Calendar</LinkTo></li>
+      <li><LinkTo @route="map">Map</LinkTo></li>
+      <li><LinkTo @route="plans">Plans</LinkTo></li>
+      <li><LinkTo @route="create-new-plan">Create New Plan</LinkTo></li>
+      <li><LinkTo @route="weekly-monthly-stats">User Stats</LinkTo></li>
+    </ul>
+    <button class="buttonStyle" type="button" {{on "click" this.logout}}>Log Out</button>
+  {{else}}
+      <ul class="nav-links">
+      <li><LinkTo {{on "click" (fn this.login "calendar")}} @route="map">Calendar</LinkTo></li>
+      <li><LinkTo {{on "click" (fn this.login "map")}} @route="map">Map</LinkTo></li>
+      <li><LinkTo {{on "click" (fn this.login "plans")}} @route="plans">Plans</LinkTo></li>
+      <li><LinkTo {{on "click" (fn this.login "create-new-plan")}} @route="create-new-plan">Create New Plan</LinkTo></li>
+      <li><LinkTo {{on "click" (fn this.login "weekly-monthly-stats")}} @route="weekly-monthly-stats">User Stats</LinkTo></li>
+    </ul>
+    <button class="buttonStyle" type="button" {{on "click" (fn this.login "calendar")}}>Log In</button>
+  {{/if}}
+</nav>
+
+<div class="indexPage">
+  <br><br><br><br><br>
+  <h1>Running Tracker</h1>
+
+  <p>Track every step, Reach every goal.</p>
+
+</div>
