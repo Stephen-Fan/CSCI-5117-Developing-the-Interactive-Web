@@ -1,0 +1,16 @@
+{{page-title "DoneCategory"}}
+
+<h1>Completed Todos in Category: {{this.model.category}}</h1>
+
+<ul>
+  {{#each this.model.todos as |todo|}}
+    <li>
+      <a href="/todo/{{todo.id}}">{{todo.text}}</a>
+    </li>
+  {{else}}
+    <p>No todos found in this category.</p>
+  {{/each}}
+</ul>
+
+<br><br><br>
+<LinkTo @route="todos">Back to All Unfinished TODOs</LinkTo>

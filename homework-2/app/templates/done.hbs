@@ -1,0 +1,32 @@
+{{page-title "Done"}}
+
+<h1>Completed TODOs List</h1>
+<p class="done-indicator">These are your all completed TODOs.</p>
+
+<ul>
+  {{#each this.doneTodos as |doneTodo|}}
+    <li class="done-todo-item">
+      <span class="done-label">Done</span>
+      <a href="/todo/{{doneTodo.id}}">{{doneTodo.text}}</a>
+    </li>
+  {{else}}
+    <p>No completed to-dos</p>
+  {{/each}}
+</ul>
+
+<h2>Check Completed TODOs by Category</h2>
+<ul>
+  {{#each this.model as |category|}}
+    <li>
+      {{!-- <button type="button" {{on "click" (fn this.deleteCategory category.categoryName category.id)}}>Delete</button> --}}
+      <a href="/done/{{category.categoryName}}">{{category.categoryName}}</a>
+    </li>
+  {{else}}
+    <p>No Categories</p>
+  {{/each}}
+</ul>
+
+<br><br><br>
+<LinkTo @route="todos">Back to All Unfinished TODOs</LinkTo>
+<br><br><br>
+<button type="button" {{on "click" this.logout}}>Log Out</button>

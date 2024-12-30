@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Summary{% endblock %}
+
+{% block content %}
+<h2>Survey Responses Summary</h2>
+
+<!-- Display each text response individually -->
+<h3>Individual Text Responses:</h3>
+<ul>
+    {% for response in responses %}
+        {% if response.optional_text %}
+            <li>{{ response.first_name }}: {{ response.optional_text }}</li>
+        {% endif %}
+    {% endfor %}
+</ul>
+
+<!-- Bar Chart for Radio Button Choices -->
+<h3>Choice Summary (Bar Chart):</h3>
+<canvas id="radioBarChart" width="400" height="200"></canvas>
+
+<!-- Bar Chart for Selection Choices -->
+<h3>Select Summary (Bar Chart):</h3>
+<canvas id="selectBarChart" width="400" height="200"></canvas>
+
+<!-- Time Series Chart for Responses Over Time -->
+<h3>Responses Over Time (Time Series):</h3>
+<canvas id="timeSeriesChart" width="400" height="200"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/luxon@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1"></script>
+
+<script>
+    // Data for Bar Chart
+    var ctx = document.getElementById('radioBarChart').getContext('2d');
+    var choice_counts = {{ choice_counts | tojson | safe }};
+    var radioBarChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Bachelor', 'Master', 'Doctoral'],
+            datasets: [{
+                label: 'Pursuing Degree',
+                data: [
+                    choice_counts['Bachelor'] || 0,
+                    choice_counts['Master'] || 0,
+                    choice_counts['Doctoral'] || 0
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(75, 192, 192, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    var ctx1 = document.getElementById('selectBarChart').getContext('2d');
+    var select_counts = {{ select_counts | tojson | safe }};
+    var selectBarChart = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: ['1st', '2nd', '3rd', '4th', '5th'],
+            datasets: [{
+                label: 'What year are you at the U?',
+                data: [
+                    select_counts['First year'] || 0,
+                    select_counts['Second year'] || 0,
+                    select_counts['Third year'] || 0,
+                    select_counts['Fourth year'] || 0,
+                    select_counts['Fifth year'] || 0
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(75, 192, 192, 0.2)', 
+                    'rgba(255, 206, 86, 0.2)', 
+                    'rgba(153, 102, 255, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)', 
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Data for Time Series Chart
+    var ctx2 = document.getElementById('timeSeriesChart').getContext('2d');
+
+    var date_labels = {{ date_labels | tojson | safe }};
+    var responses_per_day_values = {{ responses_per_day_values | tojson | safe }};
+
+    var timeSeriesChart = new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: date_labels,
+            datasets: [{
+                label: '# of Responses per Day',
+                data: responses_per_day_values,
+                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1,
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day',
+                    }
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}

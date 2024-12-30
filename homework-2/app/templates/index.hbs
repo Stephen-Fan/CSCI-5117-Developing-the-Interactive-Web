@@ -1,0 +1,9 @@
+{{page-title "Index"}}
+
+<h1>My TODO List Manager</h1>
+
+{{#if this.isLoggedIn}}
+  <button type="button" {{on "click" this.logout}}>Log Out</button>
+{{else}}
+  <button type="button" {{on "click" this.login}}>Log In</button>
+{{/if}}

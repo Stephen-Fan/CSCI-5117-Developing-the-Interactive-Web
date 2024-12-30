@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<h2>Survery Form</h2>
+<form action="{{ url_for('survey') }}" method="post" class="pure-form pure-form-stacked">
+    <!-- <form action="/submit" method="POST" class="pure-form pure-form-stacked"> -->
+    <label for="text">First Name:</label>
+    <input type="text" name="fname" required minlength="3">
+    <label for="text">Last Name:</label>
+    <input type="text" name="lname" required minlength="3">
+
+    <label>What degree are you currently pursuing:</label>
+    <label class="pure-radio">
+        <input type="radio" name="radio_option" value="Bachelor" required> Bachelor
+    </label>
+    <label class="pure-radio">
+        <input type="radio" name="radio_option" value="Master" required> Master
+    </label>
+    <label class="pure-radio">
+        <input type="radio" name="radio_option" value="Doctoral" required> Doctoral
+    </label>
+
+    <label for="select_option">What year are you at the U:</label>
+    <select name="select_option">
+        <option value="First year">First year</option>
+        <option value="Second year">Second year</option>
+        <option value="Third year">Third year</option>
+        <option value="Fourth year">Fourth year</option>
+        <option value="Fifth year">Fifth year</option>
+    </select>
+
+    <label><input type="checkbox" name="checkbox" id="checkbox">Show more options</label>
+
+    <div id="optional_text" style="display: none;">
+        <textarea name="optional_text"></textarea>
+    </div>
+
+    <button type="submit" class="pure-button pure-button-primary">Next</button>
+</form>
+
+<script>
+    const checkbox = document.getElementById('checkbox')
+    const optional_text = document.getElementById('optional_text')
+    checkbox.addEventListener('change', function() {
+        optional_text.style.display = checkbox.checked ? 'block' : 'none';
+    });
+</script>
+
+{% endblock %}

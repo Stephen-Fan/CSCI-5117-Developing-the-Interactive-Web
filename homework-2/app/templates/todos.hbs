@@ -1,0 +1,50 @@
+{{page-title "Todos"}}
+
+<h1>TODO List</h1>
+
+<h2>Add a New Category</h2>
+<div>
+  <label>
+    <input type="text" placeholder="Enter a new Category" value={{this.newCategoryText}} {{on "input" this.updateNewCategoryText}} />
+  </label>
+  <button type="button" {{on "click" this.createCategory}}>Add Category</button>
+</div>
+
+<h3>Categories</h3>
+<ul>
+  {{#each this.model.categories as |category|}}
+    <li>
+      <button type="button" {{on "click" (fn this.deleteCategory category.categoryName category.id)}}>Delete</button>
+      <a href="/todos/{{category.categoryName}}">{{category.categoryName}}</a>
+    </li>
+  {{else}}
+    <p>No Categories</p>
+  {{/each}}
+</ul>
+
+
+<h2>Add a New TODO Item</h2>
+<div>
+  <label>
+    <input type="text" placeholder="Enter a new TODO" value={{this.newTodoText}} {{on "input" this.updateNewTodoText}} />
+  </label>
+  <button type="button" {{on "click" this.createTodo}}>Add TODO</button>
+</div>
+
+<h3>Unfinished TODOS</h3>
+<ul>
+  {{#each this.model.todos as |todo|}}
+    <li>
+      <button type="button" {{on "click" (fn this.markAsDone todo)}}>Mark as Done</button>
+      <span class="todo-preview">{{todo.text}}</span>
+      <a href="/todo/{{todo.id}}">View Full</a>
+      {{!-- <a href="/todo/{{todo.id}}">{{todo.text}}</a> --}}
+    </li>
+  {{else}}
+    <p>No TODOs</p>
+  {{/each}}
+</ul>
+
+<LinkTo @route="done">Completed TODOs</LinkTo>
+<br><br><br>
+<button type="button" {{on "click" this.logout}}>Log Out</button>

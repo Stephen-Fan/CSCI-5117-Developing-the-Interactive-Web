@@ -1,0 +1,49 @@
+{{page-title "Todo"}}
+
+<h1>TODO Item</h1>
+
+
+
+<div>
+  {{#if this.model.todo.isDone}}
+    <h3>TODO Text:</h3>
+    <p class="done-todo">{{this.todoText}}</p>
+    <h3>TODO Category:</h3>
+    <p class="done-todo">{{this.model.todo.category}}</p>
+    <p class="done-indicator">Completed TODO cannot be modified.</p>
+    <br><br>
+  {{else}}
+    <div>
+      <label for="todo-text">TODO Text:</label>
+      <br>
+      <textarea id="todo-text" rows="4" {{on "input" this.updateTodoText}}>{{this.todoText}}</textarea>
+      <br><br>
+    </div>
+
+    <div>
+      <label for="todo-category">TODO Category:</label>
+      <br>
+      <select id="todo-category" value="{{this.categoryText}}" {{on "change" this.updateCategory}}>
+        {{#each this.model.categories as |category|}}
+          <option value={{category.categoryName}} selected={{eq category.categoryName this.categoryText}}>{{category.categoryName}}</option>
+        {{/each}}
+      </select>
+      <br><br>
+    </div>
+
+    <button type="button" {{on "click" this.saveTodo}}>Save Changes</button>
+
+    {{#if this.isDone}}
+      <p class="done-label">This TODO is marked as done</p>
+    {{else}}
+      <button type="button" {{on "click" this.markAsDone}}>Mark as Done</button>
+    {{/if}}
+    <br><br><br>
+  {{/if}}
+
+  
+</div>
+
+<LinkTo @route="todos">Back to All Unfinished TODOs</LinkTo>
+<br><br>
+<button type="button" {{on "click" this.logout}}>Log Out</button>

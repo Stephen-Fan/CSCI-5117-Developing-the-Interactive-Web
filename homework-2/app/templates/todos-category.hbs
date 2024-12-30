@@ -1,0 +1,26 @@
+{{page-title "TodosCategory"}}
+
+<h1>Unfinished Todos in Category: {{this.model.category}}</h1>
+
+<ul>
+  {{#each this.model.todos as |todo|}}
+    <li>
+      <a href="/todo/{{todo.id}}">{{todo.text}}</a>
+    </li>
+  {{else}}
+    <p>No todos found in this category.</p>
+  {{/each}}
+</ul>
+
+<br><br><br>
+
+<h2>Add a New TODO Item In This Category</h2>
+<div>
+  <label>
+    <input type="text" placeholder="Enter a new TODO" value={{this.newTodoTextInCategory}} {{on "input" this.updateNewTodoTextInCategory}} />
+  </label>
+  <button type="button" {{on "click" this.createTodoInCategory}}>Add TODO</button>
+</div>
+
+<br><br><br>
+<LinkTo @route="todos">Back to All Unfinished TODOs</LinkTo>

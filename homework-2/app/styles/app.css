@@ -1,0 +1,46 @@
+/* Ember supports plain CSS out of the box. More info: https://cli.emberjs.com/release/advanced-use/stylesheets/ */
+
+/* Styling for done page */
+.done-indicator {
+  font-weight: bold;
+  color: green;
+  margin-bottom: 1em;
+}
+
+.done-todo-item {
+  text-decoration: line-through;
+  color: gray;
+  margin-bottom: 10px;
+}
+
+.done-label {
+  background-color: green;
+  color: white;
+  padding: 0.2em 0.4em;
+  margin-left: 1em;
+  border-radius: 4px;
+}
+
+li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.todo-preview {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 20%;
+  margin-right: 10px;
+}
+
+button {
+  flex-shrink: 0;
+}
+
+.done-todo {
+  margin-left: 20px;
+}

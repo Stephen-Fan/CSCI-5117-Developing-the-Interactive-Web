@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Welcome to the Survey</h2>
+<p>Please consent to participate in the survey:</p>
+<a href="{{ url_for('survey') }}" class="pure-button pure-button-primary">Consent</a>
+<a href="{{ url_for('decline') }}" class="pure-button">Decline</a>
+{% endblock %}
